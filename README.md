@@ -16,8 +16,7 @@ ter
 [xlr-splunk-plugin-travis-url]: https://travis-ci.org/xebialabs-community/xlr-splunk-plugin
 [xlr-splunk-plugin-codacy-image]: https://api.codacy.com/project/badge/Grade/8fe65dd028a449fcac5d0d045b5d7fda
 [xlr-splunk-plugin-codacy-url]: https://www.codacy.com/app/rvanstone/xlr-splunk-plugin
-[xlr-splunk-plugin-code-climate-image]: https://codeclimate.com/github/xebialabs-community/xlr-splunk-plugin
-/badges/gpa.svg
+[xlr-splunk-plugin-code-climate-image]: https://codeclimate.com/github/xebialabs-community/xlr-splunk-plugin/badges/gpa.svg
 [xlr-splunk-plugin-code-climate-url]: https://codeclimate.com/github/xebialabs-community/xlr-splunk-plugin
 
 
