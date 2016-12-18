@@ -55,6 +55,7 @@ See:
     </configuration>
   ```
 + HTTP: http://dev.splunk.com/view/splunk-logging-java/SP-CAAAE7M
+
   ```
       <configuration>
           <Appender name="%user_logger_name%" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
