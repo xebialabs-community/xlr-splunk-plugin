@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+
+    THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
+    FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+
+-->
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic">
+
+    <type type="splunk.ExportHook" extends="xlrelease.ExportHook">
+        <property name="scriptLocation" hidden="true" default="splunk/sendReleaseData.py" />
+
+        <property name="host" label="Host" description="Host to connect to"/>
+        <property name="port" kind="integer" description="Port number to be used"/>
+        <property name="username"/>
+        <property name="password" password="true"/>
+        <property name="index" />
+        <property name="httpsEnabled" kind="boolean" default="true" description="Set to true if https should be used (default)" />
+    </type>
+
+    <type type="splunk.Server" extends="xlrelease.Configuration">
+        <property name="host" label="Host" description="Host to connect to"/>
+        <property name="port" kind="integer" description="Port number to be used"/>
+        <property name="username"/>
+        <property name="password" password="true"/>
+        <property name="httpsEnabled" kind="boolean" default="true" description="Set to true if https should be used (default)" />
+    </type>
+
+    <type type="splunk.Task" extends="xlrelease.PythonScript" virtual="true">
+        <property name="iconLocation" default="splunk/splunk.png" hidden="true"/>
+        <property name="splunkServer" category="input" label="Server" referenced-type="splunk.Server" kind="ci"/>
+        <property name="index" category="input" label="Index" required="true" />
+    </type>
+
+    <type type="splunk.SendData" extends="splunk.Task">
+        <property name="scriptLocation" default="splunk/sendData.py" hidden="true"/>
+
+        <property name="data" category="input" label="Data" required="true" size="large"/>
+    </type>
+
+</synthetic>

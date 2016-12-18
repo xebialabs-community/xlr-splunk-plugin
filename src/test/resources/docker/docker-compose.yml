@@ -1,0 +1,27 @@
+#
+# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
+# FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+#
+
+splunk:
+  image: splunk/splunk:6.5.0
+  volumes:
+   - ./splunk/server.conf:/opt/splunk/etc/system/local/server.conf
+  environment:
+   - SPLUNK_START_ARGS=--accept-license --answer-yes
+   - SPLUNK_ENABLE_LISTEN=9997
+   - SPLUNK_ADD=tcp 1514
+   - SPLUNK_USER=root
+  ports:
+   - "18000:8000"
+
+xlr:
+  image: xebialabs/xlr_dev_run:v6.0.0.1
+  volumes:
+    - ~/xl-licenses:/license
+    - ./../../../../:/data
+  links:
+   - splunk
+  ports:
+   - "15516:5516"
