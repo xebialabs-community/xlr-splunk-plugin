@@ -14,7 +14,7 @@ See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index
 [xlr-splunk-plugin-travis-image]: https://travis-ci.org/xebialabs-community/xlr-splunk-plugin.svg?branch=mas
 ter
 [xlr-splunk-plugin-travis-url]: https://travis-ci.org/xebialabs-community/xlr-splunk-plugin
-[xlr-splunk-plugin-codacy-image]: https://api.codacy.com/project/badge/Grade/b78313b1eb1b4b058dc4512b4d48c26f
+[xlr-splunk-plugin-codacy-image]: https://api.codacy.com/project/badge/Grade/8fe65dd028a449fcac5d0d045b5d7fda
 [xlr-splunk-plugin-codacy-url]: https://www.codacy.com/app/rvanstone/xlr-splunk-plugin
 [xlr-splunk-plugin-code-climate-image]: https://codeclimate.com/github/xebialabs-community/xlr-splunk-plugin
 /badges/gpa.svg
