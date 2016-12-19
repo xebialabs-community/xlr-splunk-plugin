@@ -24,7 +24,12 @@ See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index
 The xlr-splunk-plugin is an XL Release plugin that allows to use the export hook to send logs to Splunk.
 
 # Usage #
-Create an instance of the export hook according to the [XLR documentation](https://docs.xebialabs.com/xl-release/how-to/create-an-export-hook.html).
+
+## Export Hook ##
+Create an instance of the export hook `splunk.ExportHook` according to the [XLR documentation](https://docs.xebialabs.com/xl-release/how-to/create-an-export-hook.html).
+
+## Send data within a Release ##
+You can also make use of the `splunk.SendData` task within any release to send data to a Splunk index.
 
 # Remark #
 
