@@ -1,14 +1,28 @@
 language: java
+before_install:
+  - openssl aes-256-cbc -K $encrypted_69329f70a219_key -iv $encrypted_69329f70a219_iv
+    -in deploy_key.enc -out /tmp/deploy_key -d
+  - eval "$(ssh-agent -s)"
+  - echo -e "Host $DIST_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - chmod 600 /tmp/deploy_key
+  - ssh-add /tmp/deploy_key
+deploy:
+  - provider: releases
+    api_key:
+      secure: BlKwegRG4oMhauFPEpz/EamGnizJvH9+QFTVE6qMYNcAdaSfdtFekRPCOq7V0/ScxtjRjJJhqJ/9xDVjlle8aNUeE2ObKtHhzLWKYUJq/T9If9z+V6eweIcLxsOi3g2OrEXKdGE/DUahv/C5klqSvQjYC9B3RoqPpUuy61m5MMFIOGBqrAqN/Quc2j0hzwLSLY+E63UrlOKfNp8v5wrB7IkGHi7rpJd4Dh4yHK5DB9zGlHiaf6R9ovBNYqR7dXd7xN1RtDLpjtJEK0ZnC02w64XIh20/dVgF3ls+yvDh5+j28X0S8wucziy/ZghAOFo0gfGr/8mVf7r/xtsRZAYxe5cizGCig4QIuoNnDeYmsZASO8hnH2apjy9/fMniyp9D66V5ySatqfjQEuqFDVQUwxTnsu8ysgUxDMRCkjaKW3OIwXtNzJR5FYf8ZCTBbnfMtqm2gItsvKW2VvgF/Yr/wje9oL9wyjeJDq5XVM9BgKdbrtOBmAKL3O3wke55fwROc7sjEThxi9H8hjJb+t7xoxjW+7R6jnGvzGV0XV4hQoircNGICyPTa8JPZKJTYi8ZZB/psH7NzkiJAuJ29gSbsAzvnOmFZO8y3cG5vHM4bPdWY4T17hGIZ6GJPS4twIcxJpFFVCq6bQj9wNq/LE/vF4UeObKvr/r3Kc/UndTGzZM=
+    file: build/libs/*
+    skip_cleanup: true
+    on:
+      all_branches: true
+      tags: true
+      repo: xebialabs-community/xlr-splunk-plugin
+  - provider: script
+    skip_cleanup: true
+    script: rsync --update -raz -i $TRAVIS_BUILD_DIR/libs/*.jar $DIST_USER@$DIST_HOST:$DIST_PATH/${TRAVIS_REPO_SLUG#*/}/
+    on:
+      all_branches: true
+      tags: true
+      repo: xebialabs-community/xlr-splunk-plugin
 notifications:
   slack:
     secure: nwExD/otbCHXMRvUyMN/s53zPC8OLFeKJBUjeru0zcsPeVL1iuaMiVi+tlXoABFwi6G6/4n7cDIo2C4kEE2UYHyN9c5mkx94J0H1EH8r9/tWx54sbOSz627t+q4Fjo8N9n0WwNEKp8GSZ5vlmw/V3npF/DhmIBF+bFnf3QzefDVeCEQKDwuojNvI49DijaCAU00F0on5Vi21NGXI7ReUngWJDtqh9cxBsb7dLB/2ACa4hgRbGwIZRcKbP0dZLUB09mo2lwKPQUEPy3eTg5/2P984dnhhna+wWmPg5SsoRGt75U3QxHHHL4eDSe/RSzuNF8NaaVPxGuyaoFSTLgBVrn9nKeo/nrsH2ulQETaheqxRxfXKpamKjFfKgfEAK99e3x1R/koCeLpcRUbP/lC5K8Ek0GIAuxUOs4zZlgglMvlkeEpdhjixrBhzPT3kLZULDb4r1pQFXbkpNtn7HI64AFZh+CQcyTvM6Rg/wNVvaS4GZ3cZVBcQpmUBARwV3DHrui5XAMnuJZ759GQtzV3zSVmmM4y00nach4lHUijkMAZw0Kow7VjPMkn0tdbOKirshIG/FBIWBaT9+stAYYfTbkGU9PaJQw/yT1QQzE9NgikXhrWgfhrBWAsYyIK7XwHod17B/avr9zlsyJqDrmUOTjUM803UWCOGWGoIYnvjlhM=
-deploy:
-  provider: releases
-  api_key:
-    secure: BlKwegRG4oMhauFPEpz/EamGnizJvH9+QFTVE6qMYNcAdaSfdtFekRPCOq7V0/ScxtjRjJJhqJ/9xDVjlle8aNUeE2ObKtHhzLWKYUJq/T9If9z+V6eweIcLxsOi3g2OrEXKdGE/DUahv/C5klqSvQjYC9B3RoqPpUuy61m5MMFIOGBqrAqN/Quc2j0hzwLSLY+E63UrlOKfNp8v5wrB7IkGHi7rpJd4Dh4yHK5DB9zGlHiaf6R9ovBNYqR7dXd7xN1RtDLpjtJEK0ZnC02w64XIh20/dVgF3ls+yvDh5+j28X0S8wucziy/ZghAOFo0gfGr/8mVf7r/xtsRZAYxe5cizGCig4QIuoNnDeYmsZASO8hnH2apjy9/fMniyp9D66V5ySatqfjQEuqFDVQUwxTnsu8ysgUxDMRCkjaKW3OIwXtNzJR5FYf8ZCTBbnfMtqm2gItsvKW2VvgF/Yr/wje9oL9wyjeJDq5XVM9BgKdbrtOBmAKL3O3wke55fwROc7sjEThxi9H8hjJb+t7xoxjW+7R6jnGvzGV0XV4hQoircNGICyPTa8JPZKJTYi8ZZB/psH7NzkiJAuJ29gSbsAzvnOmFZO8y3cG5vHM4bPdWY4T17hGIZ6GJPS4twIcxJpFFVCq6bQj9wNq/LE/vF4UeObKvr/r3Kc/UndTGzZM=
-  file: build/libs/xlr-splunk-plugin-1.0.0.jar
-  skip_cleanup: true
-  on:
-    all_branches: true
-    tags: true
-    repo: xebialabs-community/xlr-splunk-plugin
